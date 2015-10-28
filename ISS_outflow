@@ -1,0 +1,56 @@
+function ISS_outflow(habitable_energy)
+%Function takes energy within habitable area of ISS as the initial stock
+%and then lowers the amount of energy within the stock over time accounting
+%for loss of heat through the thermal control system, radiation off the ISS, and
+%radiation through the windows
+
+%% Define variables
+%ISS Variables
+habitable_volume = 935; %cubic meters
+density = 1.225e3; %g/m^3 same as sea level
+specificHeat = 1.005; %J/(kg*K)
+airMass = habitable_volume * density;
+
+%Thermal Control System (TCS)
+PVTCS = 6000; %W or J/s heat dissipates --> J/min
+EATCS = 70000; %J/s or W heat rejection --> J/min
+TCS = PVTCS + EATCS;
+
+%% Time settings
+initialTime = 0; %min
+finalTime = 24 * 60 *60; %min--24 hr times 60 min/hr
+
+
+%% Initial internal energy
+initialEnergy = habitable_energy; %habitable_energy is the stock of energy over time that Annie is producing on the inflow
+
+%% Outflow Loop 
+[T, U] = ode45(@netFlows, [initialTime, finalTime], initialEnergy);
+
+%% Results
+output_energy = U;
+subplot(2,1,1)
+plot(T/60, output_energy, 'b-')
+hold on
+
+output_temp = energyToTemp(U, airMass, specificHeat);
+subplot(2,1,2)
+plot(T/60, output_temp, 'r-')
+
+    function res = netFlows(~, U)
+        outflow = TCS + ;
+        res = -outflow;
+    end
+end
+
+function res = energyToTemp(U,m,c)
+res = U/ heatCapacity(m,c);
+end
+
+% function res = tempToEnergy(T, m, c)
+% res = T * heatCapacity(m,c);
+% end
+
+function res = heatCapacity(mass, specificHeat)
+res = mass * specificHeat;
+end
