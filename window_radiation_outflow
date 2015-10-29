@@ -2,6 +2,7 @@
 %returns energy lost over time through window (sink) 
 
 function p = window_radiation_outflow(current_energy)
+
     %Input: [thickness (m), insulation constant(W/m*K)
     fused_silica = [0.094234 1.38];
     borosilicate = [0.071374 1.14];
@@ -22,7 +23,7 @@ function p = window_radiation_outflow(current_energy)
     
     
     %ISS Module Surface Areas:
-    surface_area = pi*(Cupola__radius)^2;
+    surface_area = pi*(Cupola_radius)^2;
     
     r_value = fused_silica(1)/fused_silica(2) + borosilicate(1)/borosilicate(2); % K * (m^2)/W
 
