@@ -43,6 +43,6 @@ power_rate_sun = 1.5e3; %W/m^2
     
     exposed_surface = surface_area/2;
     
-    res = exposed_surface * power_rate_sun;
+    res = .625 * exposed_surface * power_rate_sun;
 
 end
