@@ -1,3 +1,7 @@
+
+%One of 3 variables affecting outflow
+%Returns rate of energy loss from ISS due to radiation
+
 function res = radiation_outflow(currentenergy)
     air_specific_heat = 1.01; %J/g*K
     air_volume = 935; %m^3
