@@ -11,6 +11,17 @@ function res = radiation_outflow(currentenergy)
     boltzman_k = 5.6703e-8; %Watts/((m^2) * (T^4))
     
     %Surface Area calculation:
+     %ISS Module Lengths:
+    Zarya_length = 12.56; %m
+    Unity_length = 5.47; %m
+    Zvezda_length = 13.1; %m
+    Destiny_length = 8.53; %m
+    Harmony_length = 7.2; %m
+    Columbus_length = 7; %m
+    Kibo_length = 11.19; %m
+    Cupola_length = 1.5; %m 
+    Tranquility_length = 6.5; %m
+    
         %ISS Module Radii:
     Zarya_radius = 4.1/2; %m
     Unity_radius = 4.57/2; %m
@@ -37,7 +48,6 @@ function res = radiation_outflow(currentenergy)
     surface_area = 2*pi*(Zarya_lxr + Unity_lxr + Zvezda_lxr + Destiny_lxr ...
         + Harmony_lxr + Columbus_lxr + Kibo_lxr + Cupola_lxr + ...
         Tranquility_lxr);
-    
     
     t = energytoTemp(currentenergy, air_mass, air_specific_heat); %gives resulting ISS internal temperature
     res = boltzman_k * (t^4) * surface_area; 
