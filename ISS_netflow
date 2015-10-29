@@ -13,7 +13,6 @@ initialEnergy = tempToEnergy(initialTemp, air_mass, air_specific_heat); %Initial
 initialTime = 0; %sec
 finalTime = 60 * 90; %sec = 90 min
 
-
 %% Netflow Loop
     [T, U] = ode45(@netFlows, [initialTime, finalTime], initialEnergy);
     
@@ -22,11 +21,9 @@ output_energy = U;
 subplot(2,1,1)
 plot(T/60, output_energy, 'b-')
 
-output_temp = energyToTemp(U, airMass, specificHeat);
+output_temp = energyToTemp(U, air_mass, air_specific_heat);
 subplot(2,1,2)
 plot(T/60, output_temp, 'r-')
-
-
 
     function res = netFlows(~, U)
         current_energy = U;
