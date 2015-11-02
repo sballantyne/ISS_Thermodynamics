@@ -18,28 +18,29 @@ finalTime = 60 * 90; %sec = 90 min
     
 %% Results
 output_energy = U;
-subplot(3,1,1)
-plot(T/60, output_energy, 'b-')
-xlabel('Time (min)')
-ylabel('Energy (J)')
+% subplot(3,1,1)
+% plot(T/60, output_energy, 'b-')
+% xlabel('Time (min)')
+% ylabel('Energy (J)')
 title('Internal Thermal Energy Aboard ISS - All Systems Functional')
 
 output_temp_K = energyToTemp(U, air_mass, air_specific_heat);
-subplot(3,1,2)
-plot(T/60, output_temp_K, 'r-')
-xlabel('Time (min)')
-ylabel('Temperature (K)')
+% subplot(3,1,2)
+% plot(T/60, output_temp_K, 'r-')
+% xlabel('Time (min)')
+% ylabel('Temperature (K)')
 
 output_temp_F = ((output_temp_K - 273.15) * 1.8) + 32;
-subplot(3,1,3)
+% subplot(3,1,3)
 plot(T/60, output_temp_F, 'g-')
 xlabel('Time (min)')
 ylabel('Temperature (F)')
 
+
     function res = netFlows(~, U)
         current_energy = U;
-        inflow = radiation_inflow() + body_heat()+ electrical_heat(true);
-        outflow = radiation_outflow(current_energy) + cooling_system + window_radiation_outflow(current_energy);
+        inflow = radiation_inflow() + electrical_heat(true) + body_heat();
+        outflow = radiation_outflow(current_energy)+ window_radiation_outflow(current_energy) + cooling_system ;
         res = inflow - outflow;
     end
    
@@ -52,4 +53,3 @@ end
 function res = tempToEnergy(T, m, c)
 res = T * m * c;
 end
-
